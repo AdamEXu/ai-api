@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <h1>AI Key</h1>
+    <p>Your key: <span class="key">{{ key }}</span></p>
+    <p>Hover to reveal.</p>
+    <form action="/regenerate_key" method="post">
+      <button type="submit">Regenerate Key</button>
+    </form>
+    <a href="/logout">Logout</a>
+  </body>
+  {% if request.args.get('key_regenerated') %}
+  <script>
+    // alert("Key regenerated! Make sure to update your key anywhere it is used.");
+    document.body.innerHTML +=
+      '<span class="background-blur" id="background-blur" onclick="document.getElementById(\'alert\').remove(); document.getElementById(\'background-blur\').remove();"></span><div class="alert" id="alert"><p style="color: red;" id="key-regenerated">Key regenerated! Make sure to update your key anywhere it is used.</p><p>Your previous key will no longer work. Dismiss this message to continue.</p><button id="close-alert" onclick="document.getElementById(\'alert\').remove(); document.getElementById(\'background-blur\').remove();">Close</button></div>';
+    window.history.pushState({}, "", "/dashboard");
+  </script>
+  {% endif %}
+</html>
